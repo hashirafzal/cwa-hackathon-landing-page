@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 
 const EventStructureSection = () => {
   return (
-    <section className="py-24 section-gradient">
-      <div className="container mx-auto px-6 max-w-3xl text-center">
+    <section className="py-24 relative">
+      <div className="container mx-auto px-6 max-w-3xl text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

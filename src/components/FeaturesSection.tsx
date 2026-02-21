@@ -21,8 +21,8 @@ const features = [
 
 const FeaturesSection = () => {
   return (
-    <section className="py-24">
-      <div className="container mx-auto px-6">
+    <section className="py-24 section-gradient relative">
+      <div className="container mx-auto px-6 relative z-10">
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {features.map((feature, index) => (
             <motion.div
