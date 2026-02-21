@@ -1,21 +1,12 @@
 import { motion } from "framer-motion";
 import { Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      />
-      <div className="absolute inset-0 hero-gradient-overlay" />
-
-      {/* Animated orbs */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/10 blur-[100px] animate-float" />
-      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-accent/10 blur-[80px] animate-float" style={{ animationDelay: "3s" }} />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden hero-section-bg">
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-background" />
 
       <div className="relative z-10 container mx-auto px-6 text-center">
         <motion.div
@@ -23,7 +14,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium tracking-[0.2em] uppercase border border-primary/30 rounded-full text-primary bg-primary/5">
+          <span className="inline-block px-5 py-2 mb-8 text-xs font-medium tracking-[0.2em] uppercase border border-primary/25 rounded-full text-primary bg-primary/5">
             Hackathon & Innovation Sprint
           </span>
         </motion.div>
@@ -52,7 +43,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.45 }}
-          className="flex items-center justify-center gap-6 text-sm text-muted-foreground mb-10"
+          className="flex items-center justify-center gap-6 text-sm text-muted-foreground mb-12"
         >
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4 text-primary" />
@@ -72,7 +63,7 @@ const HeroSection = () => {
         >
           <Button
             size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-base font-semibold rounded-xl glow-border transition-all duration-300 hover:scale-105"
+            className="px-8 py-6 text-base font-semibold rounded-xl glow-border transition-all duration-300 hover:scale-105"
           >
             Register Now (10 Teams Maximum)
           </Button>
