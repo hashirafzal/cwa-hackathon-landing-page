@@ -1,88 +1,102 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+const Particle = ({ delay, x, y, size }: { delay: number; x: string; y: string; size: number }) => (
+  <motion.div
+    className="absolute rounded-full bg-primary/20"
+    style={{ left: x, top: y, width: size, height: size }}
+    animate={{
+      y: [0, -40, 0],
+      opacity: [0.2, 0.6, 0.2],
+      scale: [1, 1.3, 1],
+    }}
+    transition={{ duration: 4 + Math.random() * 3, repeat: Infinity, delay, ease: "easeInOut" }}
+  />
+);
 
 const AnimatedBackground = () => {
+  const [particles] = useState(() =>
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      x: `${Math.random() * 100}%`,
+      y: `${Math.random() * 100}%`,
+      delay: Math.random() * 5,
+      size: 2 + Math.random() * 4,
+    }))
+  );
+
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {/* Large soft gradient orbs */}
-      <div
-        className="absolute w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px] animate-float-slow"
-        style={{ top: "10%", left: "5%" }}
+      {/* Grid overlay */}
+      <div className="absolute inset-0 grid-bg" />
+
+      {/* Scan line effect */}
+      <div className="absolute inset-0 overflow-hidden opacity-[0.03]">
+        <div className="w-full h-px bg-primary animate-scan-line" />
+      </div>
+
+      {/* Large gradient orbs */}
+      <motion.div
+        animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute w-[600px] h-[600px] rounded-full blur-[150px] opacity-[0.07]"
+        style={{ background: "hsl(var(--glow-1))", top: "5%", left: "-5%" }}
       />
-      <div
-        className="absolute w-[400px] h-[400px] rounded-full bg-accent/8 blur-[100px] animate-float-reverse"
-        style={{ top: "50%", right: "5%" }}
+      <motion.div
+        animate={{ x: [0, -40, 0], y: [0, 40, 0] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+        className="absolute w-[500px] h-[500px] rounded-full blur-[130px] opacity-[0.06]"
+        style={{ background: "hsl(var(--glow-2))", top: "40%", right: "-10%" }}
       />
-      <div
-        className="absolute w-[350px] h-[350px] rounded-full bg-primary/5 blur-[90px] animate-float-slow"
-        style={{ bottom: "10%", left: "30%", animationDelay: "5s" }}
+      <motion.div
+        animate={{ x: [0, 30, 0], y: [0, -25, 0] }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 10 }}
+        className="absolute w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.05]"
+        style={{ background: "hsl(var(--glow-3))", bottom: "0%", left: "20%" }}
       />
 
-      {/* Small floating geometric shapes */}
+      {/* Floating particles */}
+      {particles.map((p) => (
+        <Particle key={p.id} delay={p.delay} x={p.x} y={p.y} size={p.size} />
+      ))}
+
+      {/* Geometric shapes */}
       <motion.div
-        animate={{
-          y: [0, -30, 0],
-          rotate: [0, 180, 360],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute w-8 h-8 border-2 border-primary/15 rounded-lg"
-        style={{ top: "20%", left: "15%" }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        className="absolute w-32 h-32 border border-primary/[0.06] rounded-xl"
+        style={{ top: "15%", right: "15%" }}
       />
       <motion.div
-        animate={{
-          y: [0, 25, 0],
-          rotate: [0, -90, 0],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute w-6 h-6 border-2 border-accent/15 rounded-full"
-        style={{ top: "35%", right: "20%" }}
+        animate={{ rotate: -360 }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        className="absolute w-48 h-48 border border-accent/[0.05] rounded-full"
+        style={{ bottom: "20%", left: "8%" }}
       />
       <motion.div
-        animate={{
-          y: [0, -20, 0],
-          x: [0, 15, 0],
-        }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-        className="absolute w-10 h-10 border-2 border-primary/10 rounded-xl rotate-45"
-        style={{ bottom: "30%", left: "10%" }}
-      />
-      <motion.div
-        animate={{
-          y: [0, 20, 0],
-          rotate: [0, 120, 0],
-        }}
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute w-5 h-5 bg-primary/8 rounded-full animate-pulse-glow"
-        style={{ top: "60%", left: "70%" }}
-      />
-      <motion.div
-        animate={{
-          y: [0, -15, 0],
-          x: [0, -10, 0],
-        }}
-        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        className="absolute w-7 h-7 border-2 border-accent/10 rounded-lg rotate-12"
-        style={{ top: "15%", right: "30%" }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+        className="absolute w-20 h-20 border border-primary/[0.08] rotate-45"
+        style={{ top: "60%", right: "25%" }}
       />
 
-      {/* Decorative circles like original */}
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.08, 0.15, 0.08] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute w-24 h-24 border border-primary/15 rounded-full"
-        style={{ top: "25%", left: "25%" }}
-      />
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.06, 0.12, 0.06] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute w-16 h-16 border border-accent/15 rounded-full"
-        style={{ top: "18%", right: "22%" }}
-      />
-      <motion.div
-        animate={{ scale: [1, 1.1, 1], opacity: [0.05, 0.1, 0.05] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-        className="absolute w-20 h-20 border border-primary/10 rounded-full"
-        style={{ bottom: "25%", right: "15%" }}
-      />
+      {/* Connecting lines (subtle) */}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.03]">
+        <motion.line
+          x1="10%" y1="20%" x2="90%" y2="80%"
+          stroke="hsl(var(--primary))" strokeWidth="1"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: [0, 1, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.line
+          x1="80%" y1="10%" x2="20%" y2="70%"
+          stroke="hsl(var(--accent))" strokeWidth="1"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: [0, 1, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        />
+      </svg>
     </div>
   );
 };
